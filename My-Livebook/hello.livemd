@@ -1,4 +1,4 @@
-# Untitled notebook
+# My Elixir Journey
 
 ```elixir
 defmodule Hello do
@@ -16,4 +16,30 @@ Hello.world()
 a = 1
 ```
 
-## Untitled
+## Atom Data Type Example
+
+```elixir
+defmodule AtomExample do
+  def print_message(atom) do
+    case atom do
+      :hello ->
+        IO.puts("Hello, World!")
+
+      :greeting ->
+        IO.puts("Greetings!")
+
+      :bye ->
+        IO.puts("Goodbye!")
+
+      _ ->
+        IO.puts("Unknown atom")
+    end
+  end
+end
+
+# The module AtomExample is calling the print_message function which is using different Atoms to carry different strings 
+AtomExample.print_message(:hello)
+AtomExample.print_message(:greeting)
+AtomExample.print_message(:bye)
+AtomExample.print_message(:unknown)
+```
