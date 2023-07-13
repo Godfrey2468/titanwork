@@ -43,3 +43,42 @@ AtomExample.print_message(:greeting)
 AtomExample.print_message(:bye)
 AtomExample.print_message(:unknown)
 ```
+
+## String Data Type
+
+```elixir
+name = "Godfrey"
+```
+
+```elixir
+is_binary(name)
+```
+
+```elixir
+msg = "Hello" <> name
+```
+
+```elixir
+"Hello" <> name = msg
+name
+```
+
+```elixir
+<<head, rest::binary>> = name
+head
+```
+
+```elixir
+head == ?G
+```
+
+```elixir
+<<"G", rest::binary>> = name
+rest
+```
+
+```elixir
+
+```
+
+
