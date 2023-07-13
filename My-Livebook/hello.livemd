@@ -78,7 +78,13 @@ rest
 ```
 
 ```elixir
+<<"Go", rest::binary>> = name
+rest
+```
 
+```elixir
+<<head::binary-size(2), rest::binary>> name
+head
 ```
 
 
