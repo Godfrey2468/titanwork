@@ -82,9 +82,51 @@ rest
 rest
 ```
 
+## LISTS
+
 ```elixir
-<<head::binary-size(2), rest::binary>> name
-head
+list = ["a", "b", "c"]
 ```
 
+```elixir
+Enum.at(list, 0)
+```
 
+```elixir
+[first, second, third] = list
+second
+```
+
+```elixir
+[_, _, third] = ["a", "b", "c"]
+third
+```
+
+```elixir
+hd(list)
+```
+
+```elixir
+tl(list)
+```
+
+```elixir
+[h | t] = list
+h
+```
+
+## Tuples
+
+```elixir
+{a, b} = {1, 2}
+a
+```
+
+```elixir
+{:reply, msg, state} = {:reply, "Godfrey found!", ["Godfrey", "Louis", "chiko"]}
+state
+```
+
+```elixir
+data = [a: 1, b: 2]
+```
