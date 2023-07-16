@@ -130,3 +130,208 @@ state
 ```elixir
 data = [a: 1, b: 2]
 ```
+
+## MAPS
+
+```elixir
+my_map = %{a: 1, b: 2, c: 3}
+my_map
+```
+
+```elixir
+%{a: first, b: second, c: third} = my_map
+first
+```
+
+```elixir
+%{b: second} = my_map
+second
+```
+
+```elixir
+my_map.a
+```
+
+```elixir
+map2 = %{"a" => 1, "b" => 2, "c" => 3}
+```
+
+```elixir
+%{"c" => c} = map2
+c
+```
+
+```elixir
+map2 = %{map2 | "c" => 4}
+```
+
+```elixir
+my_map = %{my_map | c: 4}
+```
+
+## Struct
+
+```elixir
+defmodule User do
+  defstruct username: "", email: "", age: nil
+end
+```
+
+```elixir
+%User{username: "Godfrey", age: 23, email: "nndanduleni.mutshinyane@tauspace.com"}
+```
+
+```elixir
+user1 = %User{username: "Godfrey", age: 23, email: "nndanduleni.mutshinyane@tauspace.com"}
+```
+
+```elixir
+%{username: username} = user1
+```
+
+```elixir
+user1 = %{user1 | age: 23}
+```
+
+## Flow Control
+
+```elixir
+list = [1, 2, 3]
+```
+
+```elixir
+case Enum.at(list, 2) do
+  1 -> "This wont proint"
+  3 -> "3 is a match!"
+  _ -> "Catch all"
+end
+```
+
+```elixir
+defmodule Post do
+  defstruct(
+    id: nil,
+    title: "",
+    description: "",
+    author: ""
+  )
+end
+```
+
+```elixir
+post1 = %Post{id: 1, title: "Title No 1", author: "Julius Caeser"}
+```
+
+```elixir
+case post1 do
+  %{author: "Godfrey"} -> "Got a post from Godfrey"
+  %{author: "Rendani"} -> "Got a post from Rendani"
+  _ -> "Got a post from #{post1.author}"
+end
+```
+
+## RECURSION
+
+```elixir
+defmodule Tutorials.Recursion.PrintDigits do
+  def upto(0) do
+    # return 
+  end
+
+  def upto(nums)
+end
+```
+
+## Section
+
+```elixir
+defmodule Tutorials.Structs.SevenWonders do
+  defstruct name: "", country: ""
+  alias Tutorials.Structs.SevenWonders
+
+  @type t :: %SevenWonders{
+          name: String.t(),
+          country: String.t()
+        }
+
+  @spec all :: [t()]
+  def all() do
+    [
+      %SevenWonders{name: "Taj Mahal", country: "India"},
+      %SevenWonders{name: "Chichen Itza", country: "Mexico"},
+      %SevenWonders{name: "Petra", country: "Jordan"},
+      %SevenWonders{name: "Machu Picchu", country: "Peru"},
+      %SevenWonders{name: "Christ the Redeemer", country: "Brazil"},
+      %SevenWonders{name: "Colosseum", country: "Italy"},
+      %SevenWonders{name: "The Great Wall Of China", country: "China"}
+    ]
+  end
+
+  @spec print_names([t()]) :: :ok
+  def print_names(wonders) do
+    Enum.each(wonders, fn %{name: name} -> IO.puts(name) end)
+  end
+
+  def filter_by_country(wonders, country) do
+    wonders
+    Enum.filter(fn %{country: country_name} -> country_name = country end)
+  end
+end
+```
+
+## Expence
+
+```elixir
+defmodule Tutorials.Structs.Expense do
+  alias Tutorials.Structs.Expense
+
+  defstruct(
+    title: "",
+    date: nil,
+    amount: 0,
+    store: ""
+  )
+
+  @type t :: %Expense{
+    title: String.t(),  
+    date: Date.t() | nil,
+    amount: number(),
+    store: String.t()
+  }
+@spec sample :: [t()]
+  def sample do
+    [
+      %Expense{title: "Grocery", date: ~D[2022-09-12], amount: 18.99, store: "Metro"},
+      %Expense{title: "Mobile", date: ~D[2022-10-18], amount: 55.65, store: "Bell"},
+      %Expense{title: "Jacket", date: ~D[2022-07-06], amount: 150.99, store: "Marks"},
+      %Expense{title: "Air Jordants", date: ~D[2022-10-30], amount: 799.99, store: "Nike"},  
+
+    ]
+    @spec total([t]) :: number()
+    def total(expenses) do
+      expenses
+      Enum.reduce(0, fn expense, acc -> expense.amount + acc end )
+    end
+  end
+
+  @spec sort_by_date([t()]) :: [t()]
+  def sort_by_date(expense) do
+    expense 
+     Enum.sort_by(& &1.date)
+  end
+
+  @spec add_expense(t) :: [t()]
+  def add_expense(%Expense{} = expense) do
+    [expense | sample()]
+  end
+
+  def update_amount(title, amount) do
+    #filter, expense,sample
+    [item] = Enum.filter(sample(), fn %{title: expense_title} -> expense_title = title end )
+    new_item = %{item | amount: amount}
+
+    [new_item | sample() |> List.delete(item   ]
+  end
+
+end
+```
