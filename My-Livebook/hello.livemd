@@ -16,6 +16,8 @@ Hello.world()
 a = 1
 ```
 
+Match Operator "=" matching a and 1.
+
 ## Atom Data Type Example
 
 ```elixir
@@ -43,6 +45,8 @@ AtomExample.print_message(:greeting)
 AtomExample.print_message(:bye)
 AtomExample.print_message(:unknown)
 ```
+
+
 
 ## String Data Type
 
@@ -242,7 +246,7 @@ defmodule Tutorials.Recursion.PrintDigits do
 end
 ```
 
-## Section
+## Seven Wonders
 
 ```elixir
 defmodule Tutorials.Structs.SevenWonders do
@@ -330,8 +334,41 @@ defmodule Tutorials.Structs.Expense do
     [item] = Enum.filter(sample(), fn %{title: expense_title} -> expense_title = title end )
     new_item = %{item | amount: amount}
 
-    [new_item | sample() |> List.delete(item   ]
+    [new_item | sample() |> List.delete(item)
+     ]
+  end
+# With Statement 
+@users ["Coco", "Cece", "Louise", "Chiko"]
+def  aunthenticate(user) when user in @users, do : {:ok, "authorized"}
+def aunthenticate(_), do: {:error, "wrong password"}
+
+def varify_password(user, _password) when user in @users, do: {:ok, "password vaified"}
+def varify_password(_user, _password) do: {:error, "wrong password"} 
+
+def login(uset, password) do
+  with {:ok, _auth_msg} <- aunthenticate(user),
+  {:ok, "#{user} logged in successfully"}
+else
+  {:error, msg} -> {:error, msg}
+  _ -> :unauthorized 
+end
+end
+```
+
+## Mean
+
+```elixir
+defmodule Stats.CentralTendency.Mean do
+  # sum (sigma)/count
+
+  def population_mean([]), do: {:error, "Invalid data type"}
+
+  def population_mean(nums) when is_list(nums) do
+    nums
+    |> validate_num_list()
   end
 
+  @spec validate_num_list([number()]) :: {boolean(), [number()]}
+  def validate_num_list(nums)
 end
 ```
