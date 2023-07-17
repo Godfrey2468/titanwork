@@ -238,10 +238,12 @@ end
 
 ```elixir
 defmodule Tutorials.Recursion.PrintDigits do
-  def upto(0) do
+  # Base Case 
+  def upto(0) do: 0
+
+  def upto(nums) do
     # return 
   end
-
   def upto(nums)
 end
 ```
@@ -349,7 +351,7 @@ def login(uset, password) do
   with {:ok, _auth_msg} <- aunthenticate(user),
   {:ok, "#{user} logged in successfully"}
 else
-  {:error, msg} -> {:error, msg}
+  {:error, msg} -> {:error, msg} |> 
   _ -> :unauthorized 
 end
 end
