@@ -1,0 +1,395 @@
+# My Elixir Journey
+
+```elixir
+defmodule Hello do
+  def world do
+    IO.puts("Hello Elixir")
+  end
+end
+
+Hello.world()
+```
+
+## My first Elixir Program
+
+```elixir
+a = 1
+```
+
+Match Operator "=" matching a and 1.
+
+## Atom Data Type Example
+
+```elixir
+defmodule AtomExample do
+  def print_message(atom) do
+    case atom do
+      :hello ->
+        IO.puts("Hello, World!")
+
+      :greeting ->
+        IO.puts("Greetings!")
+
+      :bye ->
+        IO.puts("Goodbye!")
+
+      _ ->
+        IO.puts("Unknown atom")
+    end
+  end
+end
+
+# The module AtomExample is calling the print_message function which is using different Atoms to carry different strings 
+AtomExample.print_message(:hello)
+AtomExample.print_message(:greeting)
+AtomExample.print_message(:bye)
+AtomExample.print_message(:unknown)
+```
+
+In Elixir, an atom is a data type used to represent a constant or a named value. An atom is a lowercase word or a word enclosed in single quotes ('') that starts with a colon (:). Atoms are used to identify and distinguish different entities within the Elixir code.
+
+In the above example the module 'AtomExample" is calling the function 'print_message' for different Strings to be displayed by different Atoms.
+
+<!-- livebook:{"break_markdown":true} -->
+
+
+
+## String Data Type
+
+```elixir
+name = "Godfrey"
+```
+
+```elixir
+is_binary(name)
+```
+
+```elixir
+msg = "Hello" <> name
+```
+
+```elixir
+"Hello" <> name = msg
+name
+```
+
+```elixir
+<<head, rest::binary>> = name
+head
+```
+
+```elixir
+head == ?G
+```
+
+```elixir
+<<"G", rest::binary>> = name
+rest
+```
+
+```elixir
+<<"Go", rest::binary>> = name
+rest
+```
+
+## LISTS
+
+```elixir
+list = ["a", "b", "c"]
+```
+
+```elixir
+Enum.at(list, 0)
+```
+
+```elixir
+[first, second, third] = list
+second
+```
+
+```elixir
+[_, _, third] = ["a", "b", "c"]
+third
+```
+
+```elixir
+hd(list)
+```
+
+```elixir
+tl(list)
+```
+
+```elixir
+[h | t] = list
+h
+```
+
+## Tuples
+
+```elixir
+{a, b} = {1, 2}
+a
+```
+
+```elixir
+{:reply, msg, state} = {:reply, "Godfrey found!", ["Godfrey", "Louis", "chiko"]}
+state
+```
+
+```elixir
+data = [a: 1, b: 2]
+```
+
+## MAPS
+
+```elixir
+my_map = %{a: 1, b: 2, c: 3}
+my_map
+```
+
+```elixir
+%{a: first, b: second, c: third} = my_map
+first
+```
+
+```elixir
+%{b: second} = my_map
+second
+```
+
+```elixir
+my_map.a
+```
+
+```elixir
+map2 = %{"a" => 1, "b" => 2, "c" => 3}
+```
+
+```elixir
+%{"c" => c} = map2
+c
+```
+
+```elixir
+map2 = %{map2 | "c" => 4}
+```
+
+```elixir
+my_map = %{my_map | c: 4}
+```
+
+## Struct
+
+```elixir
+defmodule User do
+  defstruct username: "", email: "", age: nil
+end
+```
+
+```elixir
+%User{username: "Godfrey", age: 23, email: "nndanduleni.mutshinyane@tauspace.com"}
+```
+
+```elixir
+user1 = %User{username: "Godfrey", age: 23, email: "nndanduleni.mutshinyane@tauspace.com"}
+```
+
+```elixir
+%{username: username} = user1
+```
+
+```elixir
+user1 = %{user1 | age: 23}
+```
+
+## Flow Control
+
+```elixir
+list = [1, 2, 3]
+```
+
+```elixir
+case Enum.at(list, 2) do
+  1 -> "This wont proint"
+  3 -> "3 is a match!"
+  _ -> "Catch all"
+end
+```
+
+```elixir
+defmodule Post do
+  defstruct(
+    id: nil,
+    title: "",
+    description: "",
+    author: ""
+  )
+end
+```
+
+```elixir
+post1 = %Post{id: 1, title: "Title No 1", author: "Julius Caeser"}
+```
+
+```elixir
+case post1 do
+  %{author: "Godfrey"} -> "Got a post from Godfrey"
+  %{author: "Rendani"} -> "Got a post from Rendani"
+  _ -> "Got a post from #{post1.author}"
+end
+```
+
+## RECURSION
+
+```elixir
+defmodule Tutorials.Recursion.PrintDigits do
+  # Base Case 
+  def upto(0), do: 0
+
+  def upto(nums) do
+    num + upto(num - 1)
+  end
+
+  def upto_tail_rec(num, acc \\ 0)
+  def upto_tail_rec(0, acc) do: acc
+
+
+    def upto_tail_rec(num, acc) do
+upto_tail_rec(num - 1, acc + num )
+    end
+
+
+end
+```
+
+## Seven Wonders
+
+```elixir
+defmodule Tutorials.Structs.SevenWonders do
+  defstruct name: "", country: ""
+  alias Tutorials.Structs.SevenWonders
+
+  @type t :: %SevenWonders{
+          name: String.t(),
+          country: String.t()
+        }
+
+  @spec all :: [t()]
+  def all() do
+    [
+      %SevenWonders{name: "Taj Mahal", country: "India"},
+      %SevenWonders{name: "Chichen Itza", country: "Mexico"},
+      %SevenWonders{name: "Petra", country: "Jordan"},
+      %SevenWonders{name: "Machu Picchu", country: "Peru"},
+      %SevenWonders{name: "Christ the Redeemer", country: "Brazil"},
+      %SevenWonders{name: "Colosseum", country: "Italy"},
+      %SevenWonders{name: "The Great Wall Of China", country: "China"}
+    ]
+  end
+
+  @spec print_names([t()]) :: :ok
+  def print_names(wonders) do
+    Enum.each(wonders, fn %{name: name} -> IO.puts(name) end)
+  end
+
+  def filter_by_country(wonders, country) do
+    wonders
+    |> Enum.filter(fn %{country: country_name} -> country_name = country end)
+  end
+end
+```
+
+```elixir
+Tutorials.Structs.SevenWonders.
+```
+
+## Expence
+
+```elixir
+defmodule Tutorials.Structs.Expense do
+  alias Tutorials.Structs.Expense
+
+  defstruct(
+    title: "",
+    date: nil,
+    amount: 0,
+    store: ""
+  )
+
+  @type t :: %Expense{
+    title: String.t(),  
+    date: Date.t() | nil,
+    amount: number(),
+    store: String.t()
+  }
+@spec sample :: [t()]
+  def sample do
+    [
+      %Expense{title: "Grocery", date: ~D[2022-09-12], amount: 18.99, store: "Metro"},
+      %Expense{title: "Mobile", date: ~D[2022-10-18], amount: 55.65, store: "Bell"},
+      %Expense{title: "Jacket", date: ~D[2022-07-06], amount: 150.99, store: "Marks"},
+      %Expense{title: "Air Jordants", date: ~D[2022-10-30], amount: 799.99, store: "Nike"},  
+
+    ]
+    @spec total([t]) :: number()
+    def total(expenses) do
+      expenses
+      Enum.reduce(0, fn expense, acc -> expense.amount + acc end )
+    end
+  end
+
+  @spec sort_by_date([t()]) :: [t()]
+  def sort_by_date(expense) do
+    expense 
+     Enum.sort_by(& &1.date)
+  end
+
+  @spec add_expense(t) :: [t()]
+  def add_expense(%Expense{} = expense) do
+    [expense | sample()]
+  end
+
+  def update_amount(title, amount) do
+    #filter, expense,sample
+    [item] = Enum.filter(sample(), fn %{title: expense_title} -> expense_title = title end )
+    new_item = %{item | amount: amount}
+
+    [new_item | sample() |> List.delete(item)
+     ]
+  end
+# With Statement 
+@users ["Coco", "Cece", "Louise", "Chiko"]
+def  aunthenticate(user) when user in @users, do : {:ok, "authorized"}
+def aunthenticate(_), do: {:error, "wrong password"}
+
+def varify_password(user, _password) when user in @users, do: {:ok, "password vaified"}
+def varify_password(_user, _password) do: {:error, "wrong password"} 
+
+def login(uset, password) do
+  with {:ok, _auth_msg} <- aunthenticate(user),
+  {:ok, "#{user} logged in successfully"}
+else
+  {:error, msg} -> {:error, msg} |> 
+  _ -> :unauthorized 
+end
+end
+```
+
+## Mean
+
+```elixir
+defmodule Stats.CentralTendency.Mean do
+  # sum (sigma)/count
+
+  def population_mean([]), do: {:error, "Invalid data type"}
+
+  def population_mean(nums) when is_list(nums) do
+    nums
+    |> validate_num_list()
+  end
+
+  @spec validate_num_list([number()]) :: {boolean(), [number()]}
+  def validate_num_list(nums)
+end
+```
