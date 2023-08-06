@@ -1,0 +1,307 @@
+# CODES
+
+## Fibonacci
+
+```elixir
+defmodule Fibonacci do
+  def fibonacci(n) when n >= 0 do
+    fibonacci(n, 0, 1)
+  end
+
+  defp fibonacci(0, a, _b), do: a
+
+  defp fibonacci(n, a, b) when n > 0 do
+    fibonacci(n - 1, b, a + b)
+  end
+end
+
+# Example usage:
+IO.puts("Fibonacci Series:")
+
+for n <- 0..10 do
+  fib_n = Fibonacci.fibonacci(n)
+  IO.puts("#{n}: #{fib_n}")
+end
+```
+
+fibonacci/1 takes the desired Fibonacci series length n as an argument and initiates the recursive process by calling the private function fibonacci/3.
+The private function fibonacci/3 handles the recursion. It takes three arguments: the current index n, the previous Fibonacci number a, and the current Fibonacci number b. It calculates the next Fibonacci number by recursively calling itself with updated values of n, b, and a + b. The recursion continues until n becomes 0 (base case), and then the function returns the result.
+The fibonacci/1 function provides a more user-friendly interface, allowing the user to calculate the Fibonacci series up to the desired length by simply providing the positive integer n.
+The example usage at the bottom demonstrates how to use the Fibonacci.fibonacci/1 function to generate and display the first 11 Fibonacci numbers. Feel free to adjust the range to calculate more Fibonacci numbers as per your requirement.
+
+## Counting inversion
+
+```elixir
+defmodule Inversions do
+  def count_inversions(list) when is_list(list) do
+    {sorted_list, inversion_count} = merge_sort(list)
+    inversion_count
+  end
+
+  defp merge_sort([]), do: {[], 0}
+  defp merge_sort([x]), do: {[x], 0}
+
+  defp merge_sort(list) do
+    {left, right} = split_list(list)
+    {sorted_left, left_count} = merge_sort(left)
+    {sorted_right, right_count} = merge_sort(right)
+    {merge(sorted_left, sorted_right), left_count + right_count + count_inversions(sorted_left, sorted_right)}
+  end
+
+  defp split_list(list) do
+    {Enum.take(list, length(list) // 2), Enum.drop(list, length(list) // 2)}
+  end
+
+  defp merge([], right), do: right
+  defp merge(left, []), do: left
+  defp merge([left_head | left_tail] = left, [right_head | right_tail] = right) do
+    if left_head <= right_head do
+      [left_head | merge(left_tail, right)]
+    else
+      [right_head | merge(left, right_tail)]
+    end
+  end
+
+  defp count_inversions([], _right), do: 0
+  defp count_inversions([left_head | left_tail], [right_head | right_tail]) when left_head > right_head do
+    {count_inversions(left_tail, [right_head | right_tail]), length(left_tail) + 1}
+  end
+  defp count_inversions(left, [_ | right_tail]) do
+    count_inversions(left, right_tail)
+  end
+end
+
+numbers = [3, 1, 4, 2, 5]
+inversion_count = Inversions.count_inversions(numbers)
+IO.puts("Number of inversions: #{inversion_count}")
+
+```
+
+## Remove space from a string
+
+```elixir
+defmodule StringUtils do
+  def remove_spaces(input_string) when is_binary(input_string) do
+    String.replace(input_string, ~r/\s/, "")
+  end
+end
+
+input_string = "Hello,    Elixir!"
+result = StringUtils.remove_spaces(input_string)
+IO.puts("Result: #{result}")
+```
+
+This code uses the String.replace function to remove the space in the mansioned string.
+
+## Replace String with substring
+
+```elixir
+defmodule SubString do
+  def replace_substring(input_string, substring, replacement) when is_binary(input_string) do
+    String.replace(input_string, ~r/#{String.replace(substring, ~r/"/, "\\\"")}/, replacement)
+  end
+end
+
+input_string = "Hello, World!"
+substring_to_replace = "World"
+replacement = "Elixir"
+result = SubString.replace_substring(input_string, substring_to_replace, replacement)
+IO.puts("Result: #{result}")
+```
+
+In this code, we define a module StringUtils with a function replace_substring/3. The function takes the input string, the substring to replace, and the replacement string as arguments.
+The replace_substring/3 function uses String.replace/3, where the first argument is the input string, the second argument is a regular expression (~r/.../), and the third argument is the replacement string.
+The regular expression ~r/#{String.replace(substring, ~r/"/, "\\\"")}/ is constructed dynamically using interpolation (#{}) to match the exact substring you want to replace. Since regular expressions use double quotes, we use String.replace/3 to escape any double quotes in the substring using \".
+In the example usage, we provide an input string, the substring "World" to be replaced, and the replacement "Elixir". The replace_substring/3 function returns a new string with the specified substring replaced by the replacement
+
+## Sort elements of a list without the Enum.sort function
+
+```elixir
+defmodule SortUtils do
+  def insertion_sort(list) when is_list(list) do
+    insertion_sort(list, [])
+  end
+
+  defp insertion_sort([], acc), do: Enum.reverse(acc)
+
+  defp insertion_sort([head | tail], acc) do
+    sorted_acc = insert_in_sorted(head, acc)
+    insertion_sort(tail, sorted_acc)
+  end
+
+  defp insert_in_sorted(element, []) do
+    [element]
+  end
+
+  defp insert_in_sorted(element, [head | tail]) when element <= head do
+    [element | [head | tail]]
+  end
+
+  defp insert_in_sorted(element, [head | tail]) do
+    [head | insert_in_sorted(element, tail)]
+  end
+end
+
+input_list = [4, 1, 9, 3, 5, 2]
+sorted_list = SortUtils.insertion_sort(input_list)
+IO.inspect(sorted_list)
+```
+
+```elixir
+input_list = [4, 1, 9, 3, 5, 2]
+sorted_list = Enum.sort(input_list)
+IO.inspect(sorted_list)
+```
+
+The above snippet sorts a list using the Enum.sort function .
+
+## Reversing elements of a list in elixir
+
+```elixir
+input_list = [4, 1, 9, 3, 5, 2]
+reversed_list = Enum.reverse(input_list)
+IO.inspect(reversed_list)
+```
+
+## Remove non Alpha characters in a string
+
+```elixir
+defmodule StringAlpha do
+  def remove_non_alphabetic_chars(input_string) when is_binary(input_string) do
+    String.replace(input_string, ~r/[^a-zA-Z]/, "")
+  end
+end
+
+input_string = "Hello, 123 World!"
+result = StringAlpha.remove_non_alphabetic_chars(input_string)
+IO.puts("Result: #{result}")
+```
+
+The code above remove non-alphabetic characeters in a string
+
+## Find ASCII value
+
+```elixir
+char = ?O
+ascii_value = Integer.to_string(char)
+IO.puts("The ASCII value of #{char} is #{ascii_value}")
+```
+
+## Find automophic number
+
+```elixir
+defmodule Automorphic do
+  def automorphic?(number) when is_integer(number) and number >= 0 do
+    square = number * number
+
+    last_digits =
+      Integer.to_string(square)
+      |> String.slice(
+        -String.length(Integer.to_string(number)),
+        String.length(Integer.to_string(square))
+      )
+
+    Integer.to_string(number) == last_digits
+  end
+end
+
+# Example usage:
+number = 376
+
+if Automorphic.automorphic?(number) do
+  IO.puts("#{number} is an automorphic number.")
+else
+  IO.puts("#{number} is not an automorphic number.")
+end
+```
+
+## Vowel/Consonant check
+
+```elixir
+defmodule CharUtils do
+  def vowel_or_consonant?(char) when is_binary(char) and byte_size(char) == 1 do
+    vowel_chars = ~w(a e i o u A E I O U)
+    char = String.downcase(char)
+
+    if char in vowel_chars do
+      "Vowel"
+    else
+      "Consonant"
+    end
+  end
+end
+
+# Example usage:
+char = "A"
+result = CharUtils.vowel_or_consonant?(char)
+IO.puts("#{char} is a #{result}.")
+```
+
+## BinaryToDecimal Conversion
+
+```elixir
+defmodule BinaryToDecimal do
+  def binary_to_decimal(binary_str) when is_binary(binary_str) do
+    Integer.parse(binary_str, 2)
+    |> case do
+      {num, _} -> num
+      _ -> {:error, "Invalid binary format"}
+    end
+  end
+end
+
+binary_str = "10101"
+
+case BinaryToDecimal.binary_to_decimal(binary_str) do
+  {:error, reason} -> IO.puts(reason)
+  decimal -> IO.puts("Decimal representation: #{decimal}")
+end
+```
+
+The above code takes binary number '10101' and converts it to decimal 21 using the binary_to_decimal function.
+
+## Sum of natural numbers using recursion
+
+```elixir
+defmodule SumUtils do
+  def sum_of_natural_numbers(0), do: 0
+
+  def sum_of_natural_numbers(n) when n > 0 do
+    n + sum_of_natural_numbers(n - 1)
+  end
+end
+
+input_number = 10
+result = SumUtils.sum_of_natural_numbers(input_number)
+IO.puts("Sum of natural numbers from 1 to #{input_number} is #{result}.")
+```
+
+## CHUNK
+
+```elixir
+# Example of Enum.chunk/2
+list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+chunked_list = Enum.chunk_every(list, 3, 1)
+IO.inspect(chunked_list)
+```
+
+## LOGGER
+
+```elixir
+defmodule MyApp do
+  import Logger
+
+  def my_function() do
+    debug("This is a debug message.")
+    info("This is an info message.")
+    warn("This is a warning.")
+    error("This is an error.")
+    fatal("This is a fatal error.")
+  end
+end
+
+MyApp.my_function(debug)
+
+# In your application configuration (config.exs):
+# config :logger, level: :info
+```

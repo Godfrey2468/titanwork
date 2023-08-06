@@ -1,0 +1,159 @@
+# Mean , mode and median
+
+```elixir
+a = 1
+```
+
+## Hello World
+
+```elixir
+defmodule Hello do
+  def world do
+    IO.puts("Hello Gods")
+  end
+end
+
+Hello.world()
+```
+
+```elixir
+brothers = ['Godfrey', 'Shawn', 'Sipho']
+new_brother = 'Phenious'
+[new_brother] ++ brothers
+```
+
+## MEAN,COME and Median
+
+```elixir
+defmodule MathUtils do
+  def mean(numbers) when is_list(numbers) do
+    case length(numbers) do
+      # Handle the case of an empty list to avoid division by zero
+      0 -> nil
+      n -> Enum.sum(numbers) / n
+    end
+  end
+
+  def median(numbers) do
+    a = [1, 2, 3, 4, 5]
+    middle_index = a |> length() |> div(2)
+    Enum.at(a, middle_index)
+  end
+end
+
+# Example usage
+numbers = [4, 7, 10, 13, 16]
+average = MathUtils.mean(numbers)
+IO.puts("The mean is: #{average}")
+
+# Median 
+middle_index = MathUtils.median(numbers)
+IO.puts("The Median is: #{middle_index}")
+```
+
+The above code calculates the mean of the list of numbers provided in the list matched with the "numbers" variable. As well as the median of the list of numbers provided in the list matched with variable "a".
+
+```elixir
+a = [1, 2, 3, 4, 5]
+middle_index = a |> length() |> div(2)
+Enum.at(a, middle_index)
+```
+
+```elixir
+defmodule Maths do
+  def mode(numbers) when is_list(numbers) do
+    case numbers do
+      [] ->
+        nil
+
+      _ ->
+        frequencies = Enum.reduce(numbers, %{}, &update_frequency(&1, &2))
+        {mode, _count} = Enum.reduce(frequencies, {nil, 0}, &find_mode(&1, &2))
+        mode
+    end
+  end
+
+  defp update_frequency(number, frequencies) do
+    Map.update(frequencies, number, 1, &(&1 + 1))
+  end
+
+  defp find_mode({number, count}, {current_mode, current_count}) do
+    if count > current_count do
+      {number, count}
+    else
+      {current_mode, current_count}
+    end
+  end
+end
+
+# Example usage
+numbers = [4, 7, 10, 10, 13, 16, 10, 16]
+mode = Maths.mode(numbers)
+IO.puts("The mode is: #{mode}")
+```
+
+The above code provides the mode of the numbers in the list matched with the "numbers" variable.
+
+## logger
+
+```elixir
+defmodule MyModule do
+  require Logger
+
+  def my_function(arg) do
+    Logger.info("Starting my_function with arg: #{arg}")
+
+    # Your function logic goes here...
+
+    Logger.debug("Some debugging information")
+
+    # More function logic...
+
+    Logger.warn("A warning message")
+
+    # More function logic...
+
+    Logger.error("An error occurred")
+
+    # Final steps...
+
+    Logger.info("my_function completed.")
+  end
+end
+```
+
+## asterisks
+
+```elixir
+defmodule MyPattern do
+  def print_pattern(n) when is_integer(n) and n > 0 do
+    print_pattern(n, n)
+  end
+
+  defp print_pattern(_, 0), do: :ok
+
+  defp print_pattern(n, row) do
+    IO.puts(String.duplicate("*", row))
+    print_pattern(n, row - 1)
+  end
+end
+
+MyPattern.print_pattern(5)
+```
+
+```elixir
+defmodule MyPattern do
+  def print_pattern(n) when is_integer(n) and n > 0 do
+    print_pattern(n, n)
+  end
+
+  defp print_pattern(_, 0), do: :ok
+
+  defp print_pattern(n, row) do
+    IO.puts(String.duplicate("*", row))
+    print_pattern(n, row + 1)
+  end
+end
+
+MyPattern.print_pattern(5)
+```

@@ -134,7 +134,7 @@ a
 
 ```elixir
 {:reply, msg, state} = {:reply, "Godfrey found!", ["Godfrey", "Louis", "chiko"]}
-state
+msg
 ```
 
 ```elixir
@@ -256,7 +256,7 @@ defmodule Tutorials.Recursion.PrintDigits do
 
 
     def upto_tail_rec(num, acc) do
-upto_tail_rec(num - 1, acc + num )
+        upto_tail_rec(num - 1, acc + num )
     end
 
 
@@ -275,6 +275,7 @@ defmodule Tutorials.Structs.SevenWonders do
           country: String.t()
         }
 
+  # helps with documantation 
   @spec all :: [t()]
   def all() do
     [
@@ -392,4 +393,12 @@ defmodule Stats.CentralTendency.Mean do
   @spec validate_num_list([number()]) :: {boolean(), [number()]}
   def validate_num_list(nums)
 end
+```
+
+## Section
+
+```elixir
+Explorer.Datasets.fossil_fuels()
+|> DF.filter(contains(country, "A") and year < 2013)
+|> DF.select(["year", "country", "total"])
 ```
